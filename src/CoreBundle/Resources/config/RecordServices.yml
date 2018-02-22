@@ -1,0 +1,19 @@
+parameters:
+  core.handler.record.class: CoreBundle\Handler\RecordHandler
+  core.entity.record.class: CoreBundle\Entity\Record
+  core.service.record.class: CoreBundle\Service\Record\RecordService
+services:
+  core.handler.record:
+    class: '%core.handler.record.class%'
+    arguments:
+      - '@service_container'
+      - '@event_dispatcher'
+      - '@core.service.record'
+  core.service.record:
+    class: '%core.service.record.class%'
+    tags:
+      - { name: kernel.event_subscriber }
+    arguments:
+      - '@service_container'
+      - '%core.entity.record.class%'
+      - '@event_dispatcher'

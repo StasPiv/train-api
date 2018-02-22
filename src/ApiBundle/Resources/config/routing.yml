@@ -1,0 +1,30 @@
+api_train_type:
+  resource: '@ApiBundle/Controller/TrainTypeController.php'
+  type: rest
+  prefix: /
+  defaults:
+    _format: json
+api_record:
+  resource: '@ApiBundle/Controller/RecordController.php'
+  type: rest
+  prefix: /
+  defaults:
+    _format: json
+api_user:
+  resource: '@ApiBundle/Controller/UserController.php'
+  type: rest
+  prefix: /
+  defaults:
+    _format: json
+api_next_train:
+  resource: '@ApiBundle/Controller/NextTrainController.php'
+  type: rest
+  prefix: /
+  defaults:
+    _format: json
+api_next_approach:
+  resource: '@ApiBundle/Controller/NextApproachController.php'
+  type: rest
+  prefix: /
+  defaults:
+    _format: json

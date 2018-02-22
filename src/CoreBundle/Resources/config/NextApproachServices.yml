@@ -1,0 +1,8 @@
+parameters:
+  core.handler.next_approach.class: CoreBundle\Handler\NextApproachHandler
+services:
+  core.handler.next_approach:
+    class: '%core.handler.next_approach.class%'
+    arguments:
+      - '@service_container'
+      - '@event_dispatcher'

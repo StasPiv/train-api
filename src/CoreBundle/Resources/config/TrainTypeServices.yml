@@ -1,0 +1,19 @@
+parameters:
+  core.handler.train_type.class: CoreBundle\Handler\TrainTypeHandler
+  core.entity.train_type.class: CoreBundle\Entity\TrainType
+  core.service.train_type.class: CoreBundle\Service\TrainType\TrainTypeService
+services:
+  core.handler.train_type:
+    class: '%core.handler.train_type.class%'
+    arguments:
+      - '@service_container'
+      - '@event_dispatcher'
+      - '@core.service.train_type'
+  core.service.train_type:
+    class: '%core.service.train_type.class%'
+    tags:
+      - { name: kernel.event_subscriber }
+    arguments:
+      - '@service_container'
+      - '%core.entity.train_type.class%'
+      - '@event_dispatcher'

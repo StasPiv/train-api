@@ -1,0 +1,8 @@
+parameters:
+  core.handler.next_train.class: CoreBundle\Handler\NextTrainHandler
+services:
+  core.handler.next_train:
+    class: '%core.handler.next_train.class%'
+    arguments:
+      - '@service_container'
+      - '@event_dispatcher'
