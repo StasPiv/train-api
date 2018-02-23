@@ -28,3 +28,9 @@ api_next_approach:
   prefix: /
   defaults:
     _format: json
+api_all_stat:
+  resource: '@ApiBundle/Controller/AllStatController.php'
+  type: rest
+  prefix: /
+  defaults:
+    _format: json

@@ -1,0 +1,8 @@
+parameters:
+  core.handler.all_stat.class: CoreBundle\Handler\AllStatHandler
+services:
+  core.handler.all_stat:
+    class: '%core.handler.all_stat.class%'
+    arguments:
+      - '@service_container'
+      - '@event_dispatcher'
