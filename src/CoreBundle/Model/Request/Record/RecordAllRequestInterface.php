@@ -13,6 +13,7 @@ use CoreBundle\Entity\TrainType;
  * @method bool hasTrainNumber()
  * @method bool hasApproachNumber()
  * @method bool hasValue()
+ * @method bool hasWeight()
  * @method bool hasTime()
  */
 interface RecordAllRequestInterface
@@ -61,6 +62,17 @@ interface RecordAllRequestInterface
      * @return float
      */
     public function setValue(float $value);
+
+    /**
+     * @return float
+     */
+    public function getWeight(): float;
+
+    /**
+     * @param float $value
+     * @return float
+     */
+    public function setWeight($value);
 
     /**
      * @return DateTime

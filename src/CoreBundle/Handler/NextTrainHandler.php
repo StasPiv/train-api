@@ -41,7 +41,7 @@ class NextTrainHandler implements ContainerAwareInterface, NextTrainProcessorInt
     public function processPost(NextTrainRequest $request): User
     {
         $userService = $this->container->get('core.service.user');
-        $user = $userService->getEntityBy(['name' => 'Stas']);
+        $user = $userService->getCurrentUser();
 
         $user->setCurrentTrain($user->getCurrentTrain() + 1)->setCurrentApproach(1);
 

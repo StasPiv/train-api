@@ -1,0 +1,8 @@
+parameters:
+  core.handler.oauth_login.class: CoreBundle\Handler\OauthLoginHandler
+services:
+  core.handler.oauth_login:
+    class: '%core.handler.oauth_login.class%'
+    arguments:
+      - '@service_container'
+      - '@event_dispatcher'

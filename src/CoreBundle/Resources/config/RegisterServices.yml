@@ -1,0 +1,8 @@
+parameters:
+  core.handler.register.class: CoreBundle\Handler\RegisterHandler
+services:
+  core.handler.register:
+    class: '%core.handler.register.class%'
+    arguments:
+      - '@service_container'
+      - '@event_dispatcher'

@@ -45,6 +45,14 @@ trait RecordDefaultValuesTrait
     }
 
     /**
+     * @return float
+     */
+    public function getDefaultWeight(): float
+    {
+        return 0;
+    }
+
+    /**
      * @return DateTime
      */
     public function getDefaultTime(): DateTime

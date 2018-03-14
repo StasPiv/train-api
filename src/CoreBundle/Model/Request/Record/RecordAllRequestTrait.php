@@ -33,6 +33,11 @@ trait RecordAllRequestTrait
     protected $value;
 
     /**
+     * @var float
+     */
+    protected $weight = 0;
+
+    /**
      * @var DateTime
      */
     protected $time;
@@ -109,6 +114,25 @@ trait RecordAllRequestTrait
     public function setValue(float $value)
     {
         $this->value = $value;
+    }
+
+    /**
+     * @return float
+     */
+    public function getWeight(): float
+    {
+        return $this->weight;
+    }
+
+    /**
+     * @param float $weight
+     * @return RecordAllRequestTrait
+     */
+    public function setWeight($weight): self
+    {
+        $this->weight = $weight;
+
+        return $this;
     }
 
     /**

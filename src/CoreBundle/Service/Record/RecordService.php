@@ -118,12 +118,23 @@ class RecordService extends AbstractService implements EventSubscriberInterface,
         } elseif ($fullUpdate) {
             $record->setValue($this->getDefaultValue());
         }
+
+        if ($request->hasWeight()) {
+            $record->setWeight($request->getWeight());
+        } elseif ($fullUpdate) {
+            $record->setWeight($this->getDefaultWeight());
+        }
     
         if ($request->hasTime()) {
             $record->setTime($request->getTime());
         } elseif ($fullUpdate) {
             $record->setTime($this->getDefaultTime());
         }
+
+        $userService = $this->container->get('core.service.user');
+        $user = $userService->getCurrentUser();
+        $record->setUser($user);
+
         return $record;
     }
 

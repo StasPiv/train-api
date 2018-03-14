@@ -33,6 +33,9 @@ trait RecordAllTypeTrait
                         ->add('value', NumberType::class, [
                         'by_reference' => false
                         ])
+                        ->add('weight', NumberType::class, [
+                        'by_reference' => false
+                        ])
                         ->add('time', TimestampType::class)
                     ->add('type', EntityType::class, [
                     'class' => TrainType::class,

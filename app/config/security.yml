@@ -6,8 +6,32 @@ security:
     providers:
         in_memory:
             memory: ~
+        user_provider:
+            entity:
+                class: CoreBundle\Entity\User
+                property: name
 
     firewalls:
+        register:
+            pattern:  ^/register
+            stateless: true
+            anonymous: true
+            form_login:
+                check_path:               /register
+                success_handler:          lexik_jwt_authentication.handler.authentication_success
+                failure_handler:          lexik_jwt_authentication.handler.authentication_failure
+                require_previous_session: false
+        doc:
+            pattern:  ^/doc
+            stateless: true
+            anonymous: true
+        api:
+            pattern:   ^/
+            stateless: true
+            provider: user_provider
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -22,3 +46,8 @@ security:
 
             # https://symfony.com/doc/current/security/form_login_setup.html
             #form_login: ~
+
+    access_control:
+        - { path: ^/doc,  roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register,  roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/,       roles: IS_AUTHENTICATED_FULLY }

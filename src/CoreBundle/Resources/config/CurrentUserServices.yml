@@ -1,0 +1,8 @@
+parameters:
+  core.handler.current_user.class: CoreBundle\Handler\CurrentUserHandler
+services:
+  core.handler.current_user:
+    class: '%core.handler.current_user.class%'
+    arguments:
+      - '@service_container'
+      - '@event_dispatcher'

@@ -45,6 +45,14 @@ class Record implements EntityInterface
     private $type;
 
     /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\User", cascade={"persist"})
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    private $user;
+
+    /**
      * @var int
      *
      * @ORM\Column(type="integer")
@@ -73,6 +81,16 @@ class Record implements EntityInterface
      * @JMS\Type("float")
      */
     private $value;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(type="float")
+     *
+     * @JMS\Expose()
+     * @JMS\Type("float")
+     */
+    private $weight = 0;
 
     /**
      * @var \DateTime
@@ -180,6 +198,44 @@ class Record implements EntityInterface
     public function setTime(\DateTime $time): self
     {
         $this->time = $time;
+
+        return $this;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     * @return Record
+     */
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getWeight(): float
+    {
+        return $this->weight;
+    }
+
+    /**
+     * @param float $weight
+     * @return Record
+     */
+    public function setWeight(float $weight): self
+    {
+        $this->weight = $weight;
 
         return $this;
     }

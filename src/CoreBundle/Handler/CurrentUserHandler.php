@@ -7,14 +7,14 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use CoreBundle\Model\Handler\NextApproachProcessorInterface;
-use CoreBundle\Model\Request\NextApproach\NextApproachRequest;
+use CoreBundle\Model\Handler\CurrentUserProcessorInterface;
+use CoreBundle\Model\Request\CurrentUser\CurrentUserRequest;
 
 
 /**
- * Class NextApproachHandler
+ * Class CurrentUserHandler
  */
-class NextApproachHandler implements ContainerAwareInterface, NextApproachProcessorInterface
+class CurrentUserHandler implements ContainerAwareInterface, CurrentUserProcessorInterface
 {
     use ContainerAwareTrait;
 
@@ -35,19 +35,12 @@ class NextApproachHandler implements ContainerAwareInterface, NextApproachProces
     }
 
     /**
-     * @param NextApproachRequest $request
+     * @param CurrentUserRequest $request
      * @return User
      */
-    public function processPost(NextApproachRequest $request): User
+    public function processGet(CurrentUserRequest $request): User
     {
-        $userService = $this->container->get('core.service.user');
-        $user = $userService->getCurrentUser();
-
-        $user->setCurrentApproach($user->getCurrentApproach() + 1);
-
-        $userService->saveEntity($user);
-
-        return $user;
+        return $this->container->get('core.service.user')->getCurrentUser();
     }
 
 }

@@ -106,6 +106,9 @@ class TrainTypeService extends AbstractService implements EventSubscriberInterfa
         } elseif ($fullUpdate) {
             $trainType->setPriority($this->getDefaultPriority());
         }
+
+        $trainType->setUser($this->container->get('core.service.user')->getCurrentUser());
+
         return $trainType;
     }
 

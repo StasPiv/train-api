@@ -50,7 +50,13 @@
         "twig/twig": "^1.0||^2.0",
         "nd-symfony/rest-bundle": "~3.3",
         "nd-symfony/rest-generator-bundle": "~1.1",
-        "nelmio/cors-bundle": "1.5.*"
+        "nelmio/cors-bundle": "1.5.*",
+        "hwi/oauth-bundle": "0.6.1",
+        "php-http/guzzle6-adapter": "1.1.1",
+        "php-http/httplug-bundle": "1.8.1",
+        "lexik/jwt-authentication-bundle": "2.4.*",
+        "friendsofsymfony/user-bundle": "~2.0",
+        "google/apiclient": "^2.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

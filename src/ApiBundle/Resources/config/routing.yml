@@ -28,3 +28,21 @@ api_next_approach:
   prefix: /
   defaults:
     _format: json
+api_oauth_login:
+  resource: '@ApiBundle/Controller/OauthLoginController.php'
+  type: rest
+  prefix: /
+  defaults:
+    _format: json
+api_register:
+  resource: '@ApiBundle/Controller/RegisterController.php'
+  type: rest
+  prefix: /
+  defaults:
+    _format: json
+api_current_user:
+  resource: '@ApiBundle/Controller/CurrentUserController.php'
+  type: rest
+  prefix: /
+  defaults:
+    _format: json

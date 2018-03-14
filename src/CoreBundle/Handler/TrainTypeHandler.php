@@ -52,7 +52,7 @@ class TrainTypeHandler implements ContainerAwareInterface, TrainTypeProcessorInt
      */
     public function processGetC(TrainTypeListRequest $request): array
     {
-        return $this->trainTypeService->getEntitiesByWithListRequestAndTotal([], $request);
+        return $this->trainTypeService->getEntitiesByWithListRequestAndTotal(['user' => $this->container->get('core.service.user')->getCurrentUser()], $request);
     }
 
     /**

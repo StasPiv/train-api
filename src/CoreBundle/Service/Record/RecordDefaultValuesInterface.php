@@ -33,6 +33,11 @@ interface RecordDefaultValuesInterface
     public function getDefaultValue(): float;
 
     /**
+     * @return float
+     */
+    public function getDefaultWeight(): float;
+
+    /**
      * @return DateTime
      */
     public function getDefaultTime(): DateTime;

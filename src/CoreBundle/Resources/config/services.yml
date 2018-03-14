@@ -9,4 +9,10 @@ imports:
     resource: NextTrainServices.yml
   -
     resource: NextApproachServices.yml
+  -
+    resource: OauthLoginServices.yml
+  -
+    resource: RegisterServices.yml
+  -
+    resource: CurrentUserServices.yml
 services: null
