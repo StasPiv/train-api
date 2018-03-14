@@ -15,4 +15,6 @@ imports:
     resource: RegisterServices.yml
   -
     resource: CurrentUserServices.yml
+  -
+    resource: AllStatServices.yml
 services: null
