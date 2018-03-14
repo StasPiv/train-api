@@ -41,12 +41,15 @@ class AllStatHandler implements ContainerAwareInterface, AllStatProcessorInterfa
      */
     public function processGet(AllStatRequest $request): array
     {
+        $currentUser = $this->container->get('core.service.user')->getCurrentUser();
+
         $sql = <<<'SQL'
-SELECT tt.title, ROUND(AVG(value),2) avg, MAX(value) max FROM record
+SELECT tt.title, ROUND(AVG(value),2) avg, MAX(value) max, ROUND(AVG(weight),2) avgWeight, MAX(weight) maxWeight FROM record
               JOIN train_type tt ON tt.id = record.type_id
-            WHERE DATE(time) > DATE(NOW() - INTERVAL 30 DAY)
+            WHERE DATE(time) > DATE(NOW() - INTERVAL 30 DAY) AND record.user_id = %current_user%
             GROUP BY type_id;
 SQL;
+        $sql = str_replace('%current_user%', $currentUser->getId(), $sql);
         /** @var EntityManager $em */
         $em = $this->container->get('doctrine')->getManager();
         $stmt = $em->getConnection()->prepare($sql);
@@ -56,11 +59,12 @@ SQL;
         $result['30days'] = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         $sql = <<<'SQL'
-SELECT tt.title, ROUND(AVG(value),2) avg, MAX(value) max FROM record
+SELECT tt.title, ROUND(AVG(value),2) avg, MAX(value) max, ROUND(AVG(weight),2) avgWeight, MAX(weight) maxWeight FROM record
               JOIN train_type tt ON tt.id = record.type_id
-            WHERE DATE(time) > DATE(NOW() - INTERVAL 7 DAY)
+            WHERE DATE(time) > DATE(NOW() - INTERVAL 7 DAY) AND record.user_id = %current_user%
             GROUP BY type_id;
 SQL;
+        $sql = str_replace('%current_user%', $currentUser->getId(), $sql);
         /** @var EntityManager $em */
         $em = $this->container->get('doctrine')->getManager();
         $stmt = $em->getConnection()->prepare($sql);
@@ -70,11 +74,12 @@ SQL;
         $result['7days'] = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         $sql = <<<'SQL'
-SELECT tt.title, ROUND(AVG(value),2) avg, MAX(value) max FROM record
+SELECT tt.title, ROUND(AVG(value),2) avg, MAX(value) max, ROUND(AVG(weight),2) avgWeight, MAX(weight) maxWeight FROM record
               JOIN train_type tt ON tt.id = record.type_id
-            WHERE DATE(time) = DATE(NOW() - INTERVAL 1 DAY)
+            WHERE DATE(time) = DATE(NOW() - INTERVAL 1 DAY) AND record.user_id = %current_user%
             GROUP BY type_id;
 SQL;
+        $sql = str_replace('%current_user%', $currentUser->getId(), $sql);
         /** @var EntityManager $em */
         $em = $this->container->get('doctrine')->getManager();
         $stmt = $em->getConnection()->prepare($sql);
@@ -84,11 +89,12 @@ SQL;
         $result['yesterday'] = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         $sql = <<<'SQL'
-SELECT tt.title, ROUND(AVG(value),2) avg, MAX(value) max FROM record
+SELECT tt.title, ROUND(AVG(value),2) avg, MAX(value) max, ROUND(AVG(weight),2) avgWeight, MAX(weight) maxWeight FROM record
               JOIN train_type tt ON tt.id = record.type_id
-            WHERE DATE(time) = DATE(NOW() - INTERVAL 0 DAY)
+            WHERE DATE(time) = DATE(NOW() - INTERVAL 0 DAY) AND record.user_id = %current_user%
             GROUP BY type_id;
 SQL;
+        $sql = str_replace('%current_user%', $currentUser->getId(), $sql);
         /** @var EntityManager $em */
         $em = $this->container->get('doctrine')->getManager();
         $stmt = $em->getConnection()->prepare($sql);
