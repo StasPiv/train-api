@@ -214,4 +214,9 @@ class User implements EntityInterface, JWTUserInterface
     {
         // TODO: Implement createFromPayload() method.
     }
+
+    public function getUsername()
+    {
+        return $this->name;
+    }
 }
