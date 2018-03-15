@@ -74,14 +74,14 @@ swiftmailer:
 nelmio_cors:
     defaults:
         allow_credentials: true
-        allow_origin: ['*']
+        allow_origin: '%allow-origin%'
         allow_headers: ['*']
         allow_methods: ['POST', 'PUT', 'GET', 'DELETE', 'PATCH', 'OPTIONS']
         max_age: 0
     paths:
         '^/':
             origin_regex: true
-            allow_origin: ['*']
+            allow_origin: '%allow-origin%'
             allow_headers: ['*']
             allow_methods: ['POST', 'PUT', 'GET', 'DELETE', 'PATCH', 'OPTIONS']
             max_age: 3600

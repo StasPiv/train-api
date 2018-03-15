@@ -23,3 +23,4 @@ parameters:
     jwt_token_ttl:        3600
 
     lexik_jwt_authentication.user_identity_field: name
+    allow-origin: ['*']
