@@ -44,10 +44,13 @@ class AllStatHandler implements ContainerAwareInterface, AllStatProcessorInterfa
         $currentUser = $this->container->get('core.service.user')->getCurrentUser();
 
         $sql = <<<'SQL'
-SELECT tt.title, ROUND(AVG(value),2) avg, MAX(value) max, ROUND(AVG(weight),2) avgWeight, MAX(weight) maxWeight FROM record
-              JOIN train_type tt ON tt.id = record.type_id
-            WHERE DATE(time) > DATE(NOW() - INTERVAL 30 DAY) AND record.user_id = %current_user%
-            GROUP BY type_id;
+SELECT tt.title, DATE(NOW()) - DATE(time)  interv, MAX(`value`) `maxValue`, MAX(weight) `maxWeight`, MIN(`value`) `minValue`, MAX(weight) `minWeight`,
+  ROUND(AVG(`value`),2) `avgValue`, ROUND(AVG(weight),2) `avgWeight` FROM record r
+  JOIN train_type tt ON tt.id = r.type_id
+  JOIN user u ON u.id = r.user_id
+  WHERE u.id = %current_user%
+  GROUP BY u.name, tt.title, interv
+ORDER BY interv ASC
 SQL;
         $sql = str_replace('%current_user%', $currentUser->getId(), $sql);
         /** @var EntityManager $em */
@@ -55,14 +58,15 @@ SQL;
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->execute([]);
 
-
-        $result['30days'] = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $result['last'] = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         $sql = <<<'SQL'
-SELECT tt.title, ROUND(AVG(value),2) avg, MAX(value) max, ROUND(AVG(weight),2) avgWeight, MAX(weight) maxWeight FROM record
-              JOIN train_type tt ON tt.id = record.type_id
-            WHERE DATE(time) > DATE(NOW() - INTERVAL 7 DAY) AND record.user_id = %current_user%
-            GROUP BY type_id;
+SELECT tt.title, MAX(`value`) `maxValue`, MAX(weight) `maxWeight`, MIN(`value`) `minValue`, MAX(weight) `minWeight`,
+  ROUND(AVG(`value`),2) `avgValue`, ROUND(AVG(weight),2) `avgWeight` FROM record r
+  JOIN train_type tt ON tt.id = r.type_id
+  JOIN user u ON u.id = r.user_id
+  WHERE u.id = %current_user%
+  GROUP BY tt.title
 SQL;
         $sql = str_replace('%current_user%', $currentUser->getId(), $sql);
         /** @var EntityManager $em */
@@ -70,38 +74,7 @@ SQL;
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->execute([]);
 
-
-        $result['7days'] = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
-        $sql = <<<'SQL'
-SELECT tt.title, ROUND(AVG(value),2) avg, MAX(value) max, ROUND(AVG(weight),2) avgWeight, MAX(weight) maxWeight FROM record
-              JOIN train_type tt ON tt.id = record.type_id
-            WHERE DATE(time) = DATE(NOW() - INTERVAL 1 DAY) AND record.user_id = %current_user%
-            GROUP BY type_id;
-SQL;
-        $sql = str_replace('%current_user%', $currentUser->getId(), $sql);
-        /** @var EntityManager $em */
-        $em = $this->container->get('doctrine')->getManager();
-        $stmt = $em->getConnection()->prepare($sql);
-        $stmt->execute([]);
-
-
-        $result['yesterday'] = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
-        $sql = <<<'SQL'
-SELECT tt.title, ROUND(AVG(value),2) avg, MAX(value) max, ROUND(AVG(weight),2) avgWeight, MAX(weight) maxWeight FROM record
-              JOIN train_type tt ON tt.id = record.type_id
-            WHERE DATE(time) = DATE(NOW() - INTERVAL 0 DAY) AND record.user_id = %current_user%
-            GROUP BY type_id;
-SQL;
-        $sql = str_replace('%current_user%', $currentUser->getId(), $sql);
-        /** @var EntityManager $em */
-        $em = $this->container->get('doctrine')->getManager();
-        $stmt = $em->getConnection()->prepare($sql);
-        $stmt->execute([]);
-
-
-        $result['today'] = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $result['records'] = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         return $result;
     }
