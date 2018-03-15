@@ -44,7 +44,7 @@ class AllStatHandler implements ContainerAwareInterface, AllStatProcessorInterfa
         $currentUser = $this->container->get('core.service.user')->getCurrentUser();
 
         $sql = <<<'SQL'
-SELECT tt.title, DATE(NOW()) - DATE(time)  interv, MAX(`value`) `maxValue`, MAX(weight) `maxWeight`, MIN(`value`) `minValue`, MAX(weight) `minWeight`,
+SELECT tt.title, DATEDIFF(DATE(NOW()), DATE(time))  interv, MAX(`value`) `maxValue`, MAX(weight) `maxWeight`, MIN(`value`) `minValue`, MAX(weight) `minWeight`,
   ROUND(AVG(`value`),2) `avgValue`, ROUND(AVG(weight),2) `avgWeight` FROM record r
   JOIN train_type tt ON tt.id = r.type_id
   JOIN user u ON u.id = r.user_id
