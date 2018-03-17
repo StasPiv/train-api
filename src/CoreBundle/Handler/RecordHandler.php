@@ -53,7 +53,13 @@ class RecordHandler implements ContainerAwareInterface, RecordProcessorInterface
     public function processGetC(RecordListRequest $request): array
     {
         $user = $this->container->get('core.service.user')->getCurrentUser();
-        return $this->recordService->getEntitiesByWithListRequestAndTotal(['user' => $user], $request);
+        $criteria = ['user' => $user];
+
+        if (!$request->getType()->isNull()) {
+            $criteria['type'] = $request->getType();
+        }
+
+        return $this->recordService->getEntitiesByWithListRequestAndTotal($criteria, $request);
     }
 
     /**
